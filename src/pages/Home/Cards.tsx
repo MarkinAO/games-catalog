@@ -1,6 +1,7 @@
 import style from "./Cards.module.scss";
 import Card from "./components/Card/Card";
 import type { GameData } from "../../model/types";
+import { Link } from "react-router-dom";
 
 interface ICards {
   cards: GameData[];
@@ -12,7 +13,9 @@ export default function Cards({ cards }: ICards) {
       {cards.map((card) => {
         return (
           <div className={style.item} key={card.id}>
-            <Card game={card} />
+            <Link to={`/${card.id}`}>
+                <Card game={card} />
+            </Link>            
           </div>
         );
       })}
