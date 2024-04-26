@@ -1,15 +1,11 @@
 import style from "./Cards.module.scss";
 import Card from "./components/Card/Card";
-import type { GameData } from "../../model/types";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState, AppDispatch } from "../../redux/store";
 import { useEffect } from "react";
 import { getGames } from "../../redux/gamesSlice";
-
-interface ICards {
-  cards: GameData[];
-}
+import Loader from "../../ui/loader/Loader";
 
 export default function Cards() {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,16 +17,20 @@ export default function Cards() {
   }, [])
 
   return (
-    <div className={style.container}>
-      {games.map((card) => {
-        return (
-          <div className={style.item} key={card.id}>
-            <Link to={`/${card.id}`}>
-                <Card game={card} />
-            </Link>            
-          </div>
-        );
-      })}
-    </div>
+    <>
+      {loading && <Loader />}
+      {!loading &&
+      <div className={style.container}>        
+        {games.map((card) => {
+          return (
+            <div className={style.item} key={card.id}>
+              <Link to={`/${card.id}`}>
+                  <Card game={card} />
+              </Link>            
+            </div>
+          );
+        })}
+      </div>}
+    </>    
   );
 }
