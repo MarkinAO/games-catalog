@@ -19,6 +19,11 @@ export default function Platforms({ data }: IPlatforms) {
             img: windows
         },
         {
+            name: 'PC',
+            flag: false,
+            img: windows
+        },
+        {
             name: 'linux',
             flag: false,
             img: linux

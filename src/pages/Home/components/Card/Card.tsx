@@ -16,7 +16,7 @@ export default function Card({ game }: ICard) {
         ></div>
         <h3 className={style.name}>{game.name}</h3>
         <div className={style.rating}>Рейтинг: {game.rating}</div>
-        <Platforms data={game.platforms} />
+        <Platforms data={game.parent_platforms} />
       </div>
     </>
   );

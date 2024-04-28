@@ -6,7 +6,7 @@ export default function Pages() {
     return(
         <Routes>
             <Route path='/' element={<Cards />} />
-            <Route path='/:id' element={<GameCard />} />
+            <Route path='/:slug' element={<GameCard />} />
         </Routes>
     )
 }

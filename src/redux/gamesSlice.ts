@@ -5,6 +5,7 @@ import type { GameData } from '../model/types';
 
 export interface GameState {
   games: GameData[]
+  filteredGames: GameData[]
   count: number
   load: boolean
   error: string
@@ -12,16 +13,20 @@ export interface GameState {
 
 const initialState: GameState = {
     games: [],
+    filteredGames: [],
     count: 0,
     load: false,
     error: ''
 }
 
 const url = `${import.meta.env.VITE_API_URL}${import.meta.env.VITE_API_KEY}`;
-export const getGames = createAsyncThunk('card/getGames', () => {    
-    return axios.get(url).then(res => {
+export const getGames = createAsyncThunk('card/getGames', (count: number) => {
+    const newCount = count + 1;
+    return axios.get(url, {params: {page_size: 100}}).then(res => {
         if(res.status === 200) {
             return res.data.results
+        } else {
+          if(newCount < 4) getGames(newCount);
         }
     })
 })

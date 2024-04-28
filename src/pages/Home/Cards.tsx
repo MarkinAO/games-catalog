@@ -11,9 +11,9 @@ export default function Cards() {
   const dispatch = useDispatch<AppDispatch>();
   const games = useSelector((state: RootState) => state.games.games);
   const loading = useSelector((state: RootState) => state.games.load);
-
+  
   useEffect(() => {
-    dispatch(getGames())
+    dispatch(getGames(0))
   }, [])
 
   return (
@@ -24,7 +24,7 @@ export default function Cards() {
         {games.map((card) => {
           return (
             <div className={style.item} key={card.id}>
-              <Link to={`/${card.id}`}>
+              <Link to={`/${card.slug}`}>
                   <Card game={card} />
               </Link>            
             </div>
