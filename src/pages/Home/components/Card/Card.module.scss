@@ -22,3 +22,9 @@
     cursor: pointer;
     transform: translate(0, -10px);
 }
+
+@media (width < 768px) {
+    .container {
+        width: 400px;
+    }
+}

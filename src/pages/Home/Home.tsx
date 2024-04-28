@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { getGames } from "../../redux/gamesSlice";
 import Loader from "../../ui/loader/Loader";
 import Search from "./components/Search/Search";
+import ScrollUp from "../../ui/scrollUp/ScrollUp";
 
 export default function Cards() {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,6 +21,7 @@ export default function Cards() {
   return (
     <div className={style.wrap}>
       <Search />
+      <ScrollUp />
       {loading && <Loader />}
       {!loading &&
       <div className={style.container}>

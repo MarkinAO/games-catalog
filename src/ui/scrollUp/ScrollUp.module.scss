@@ -1,0 +1,17 @@
+.arrow {
+    display: inline-block;
+    position: fixed;  
+    right: 75px;
+    bottom: 75px;
+    padding: 12px;
+    border: solid #000000;
+    border-width: 0 12px 12px 0;  
+    cursor: pointer;
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    z-index: 1;
+}
+
+.hidden {
+    visibility: hidden;
+}
