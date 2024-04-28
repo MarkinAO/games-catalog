@@ -31,12 +31,39 @@ export const getGames = createAsyncThunk('card/getGames', (count: number) => {
     })
 })
 
+interface IsearchQuery {
+  query: string,
+  count: number
+}
+
+export const searchQuery = createAsyncThunk('card/searchQuery', ({query, count}: IsearchQuery) => {
+  const params = {
+    params: {
+      page_size: 100,
+      search: query,
+      search_precise: true,
+      search_exact: true,
+      tags: 'singleplayer'
+    }    
+  }
+  const newUrl = url + `&${query}`;
+  const newCount = count + 1;
+  return axios.get(newUrl, params).then(res => {
+      if(res.status === 200) {
+          return res.data.results
+      } else {
+        if(newCount < 4) getGames(newCount);
+      }
+  })
+})
+
 export const GamesSlice = createSlice({
   name: 'games',
   initialState,
   reducers: {},
   extraReducers: builder => {
     builder
+      // Получить список игр
       .addCase(getGames.pending, state => {
         state.load = true
       })
@@ -46,6 +73,20 @@ export const GamesSlice = createSlice({
         state.error = ''
       })
       .addCase(getGames.rejected, (state, action) => {
+        state.load = false
+        state.error = 'Что-то пошло не так...'
+      })
+
+      // Поиск
+      .addCase(searchQuery.pending, state => {
+        state.load = true
+      })
+      .addCase(searchQuery.fulfilled, (state, action) => {
+        state.load = false
+        state.games = action.payload
+        state.error = ''
+      })
+      .addCase(searchQuery.rejected, (state, action) => {
         state.load = false
         state.error = 'Что-то пошло не так...'
       })

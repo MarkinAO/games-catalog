@@ -10,7 +10,7 @@ export default function GameCard() {
     const games = useSelector((state: RootState) => state.games.games);
     const game = games.find(game => game.slug === slug);
     const players = game && game.tags.find(el => el.name.toLowerCase() === 'multiplayer') ? 'Доступен' : 'Не доступен';
-    console.log(game)
+    
     return(
         <div className={style.container}>
             {game &&
