@@ -49,7 +49,7 @@ interface ISearchQuery {
 }
 
 export const searchQuery = createAsyncThunk('card/searchQuery', ({query, count, platforms, tags, ordering, genres}: ISearchQuery) => {
-  let params = {
+  const params = {
     params: {
       page_size: 100,
       search_precise: true,
@@ -95,7 +95,7 @@ export const GamesSlice = createSlice({
         state.games = action.payload
         state.error = ''
       })
-      .addCase(getGames.rejected, (state, action) => {
+      .addCase(getGames.rejected, (state) => {
         state.load = false
         state.error = 'Что-то пошло не так...'
       })
@@ -109,7 +109,7 @@ export const GamesSlice = createSlice({
         state.games = action.payload
         state.error = ''
       })
-      .addCase(searchQuery.rejected, (state, action) => {
+      .addCase(searchQuery.rejected, (state) => {
         state.load = false
         state.error = 'Что-то пошло не так...'
       })

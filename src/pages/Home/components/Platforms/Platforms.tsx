@@ -59,7 +59,6 @@ export default function Platforms({ data }: IPlatforms) {
             platforms[index].flag = true;
         }
     })
-    console.log(data)
 
     return(
         <div className={style.container}>

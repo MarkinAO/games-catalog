@@ -63,7 +63,7 @@ export default function Filter() {
                     .map(key => filters[key] ? key : '')
                     .join(',')
                     .replace(/^,|,$/g, '')
-                    .replace(/\,\s*,/g, ',')
+                    .replace(/,\s*,/g, ',')
                     .replace('PC', '1')
                     .replace('MAC', '5')
                     .replace('Linux', '6')

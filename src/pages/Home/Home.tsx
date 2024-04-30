@@ -22,7 +22,7 @@ export default function Cards() {
 
   useEffect(() => {
     if(games.length === 0) getGamesList()
-  }, [])
+  }, [games.length])
 
   useEffect(() => {
 

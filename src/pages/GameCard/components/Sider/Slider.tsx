@@ -29,5 +29,5 @@ export default function Slider({ images }: ISlider) {
         })}   
         </>           
     </Swiper>
-  );
-};
+  )
+}
