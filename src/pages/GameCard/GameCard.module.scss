@@ -9,8 +9,11 @@
     .platforms {
         display: flex;
         flex-wrap: wrap;
-        gap: 15px;
+        gap: 10px;
         align-items: end;
+        span {
+            text-decoration: solid underline;
+        }
     }
     .description {
         display: flex;
@@ -33,5 +36,23 @@
             box-shadow: 2px 2px 9px 0 #9c9c9c;    
             transform: translate(0, -3px);
         }
-    }    
+    }
+
+    @media (max-width: 1024px) {
+        h1 {
+            font-size: 42px;
+        }
+        .description {
+            max-width: 690px;
+        }
+    }
+
+    @media (max-width: 760px) {
+        h1 {
+            font-size: 36px;
+        }
+        .description {
+            max-width: 500px;
+        }
+    }
 }

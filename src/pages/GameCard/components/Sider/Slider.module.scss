@@ -5,3 +5,15 @@
     }
 }
 
+@media (max-width: 1024px) {
+    .slider {
+        max-width: 690px;
+    }
+}
+
+@media (max-width: 760px) {
+    .slider {
+        max-width: 500px;
+    }
+}
+

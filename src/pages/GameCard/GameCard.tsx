@@ -21,8 +21,11 @@ export default function GameCard() {
                     <div className={style.description}>
                         <div><b>Рейтинг:</b> {game.rating}</div>                        
                         <p>
-                            <b>Язык: </b>
-                            {game.tags[0].language}
+                            <b>Жанр: </b>
+                            {game.genres.map((ganre, index) => {
+                                const separator = (index !== 0) ? ', ' : '';
+                                return <span key={uuidv4()}>{`${separator}${ganre.name}`}</span>
+                            })}
                         </p>
                         <p>
                             <b>Мультиплеер: </b>
