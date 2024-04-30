@@ -8,6 +8,7 @@ import { getGames } from "../../redux/gamesSlice";
 import Loader from "../../ui/loader/Loader";
 import Search from "./components/Search/Search";
 import ScrollUp from "../../ui/scrollUp/ScrollUp";
+import Filter from "./components/Filter/Filter";
 
 export default function Cards() {
   const dispatch = useDispatch<AppDispatch>();
@@ -15,12 +16,17 @@ export default function Cards() {
   const loading = useSelector((state: RootState) => state.games.load);
   
   useEffect(() => {
-    dispatch(getGames(0))
+    if(games.length === 0) dispatch(getGames(0))
   }, [])
+
+  useEffect(() => {
+
+  },[games])
 
   return (
     <div className={style.wrap}>
       <Search />
+      <Filter />
       <ScrollUp />
       {loading && <Loader />}
       {!loading &&

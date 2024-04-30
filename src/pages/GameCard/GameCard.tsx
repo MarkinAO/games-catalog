@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../../redux/store";
 import Slider from './components/Sider/Slider';
 import { v4 as uuidv4 } from 'uuid';
+import { Link } from 'react-router-dom';
 
 export default function GameCard() {
     const { slug } = useParams();
@@ -33,9 +34,12 @@ export default function GameCard() {
                                 return <span key={uuidv4()}>{el.platform.name}</span>
                             })}                            
                         </div>
-                    </div>                    
+                    </div>
                 </>                
             }
+            <div className={style.buttonWrap}>
+                <Link to={'/'} className={style.backButton}>Назад</Link>
+            </div>            
         </div>
     )
 }

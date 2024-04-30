@@ -6,6 +6,7 @@
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 1px 1px 5px 0 #9c9c9c;
+    cursor: pointer;
     transition: all 0.2s;
 
     .skin {
@@ -18,8 +19,7 @@
 }
 
 .container:hover {
-    box-shadow: 3px 5px 10px 0 #9c9c9c;
-    cursor: pointer;
+    box-shadow: 3px 5px 10px 0 #9c9c9c;    
     transform: translate(0, -10px);
 }
 

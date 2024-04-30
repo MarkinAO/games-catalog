@@ -19,4 +19,19 @@
         margin: 0 auto;
         max-width: 800px;       
     }
+    .buttonWrap {
+        padding-top: 50px;
+        .backButton {
+            padding: 5px 15px;
+            color: #000000;
+            border: 1px solid #9c9c9c;
+            box-shadow: 1px 1px 5px 0 #9c9c9c;
+            transition: all 0.2s;
+        }
+        .backButton:hover {
+            border: 1px solid #ffffff;
+            box-shadow: 2px 2px 9px 0 #9c9c9c;    
+            transform: translate(0, -3px);
+        }
+    }    
 }

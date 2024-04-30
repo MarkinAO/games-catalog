@@ -1,22 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import type { GameData } from '../model/types'; 
+import type { GameData, Filters } from '../model/types';
+import type { PayloadAction } from '@reduxjs/toolkit'
 
 export interface GameState {
   games: GameData[]
-  filteredGames: GameData[]
+  filters: Filters
   count: number
   load: boolean
   error: string
+  query: string
 }
 
 const initialState: GameState = {
     games: [],
-    filteredGames: [],
+    filters: {
+      platforms: '',
+      tags: '',
+      ordering: '',
+      Rus: ''
+    },
     count: 0,
     load: false,
-    error: ''
+    error: '',
+    query: ''
 }
 
 const url = `${import.meta.env.VITE_API_URL}${import.meta.env.VITE_API_KEY}`;
@@ -31,28 +39,36 @@ export const getGames = createAsyncThunk('card/getGames', (count: number) => {
     })
 })
 
-interface IsearchQuery {
-  query: string,
+interface ISearchQuery {
+  query: string
   count: number
+  platforms: string
+  tags: string
+  ordering: string
+  Rus: string
 }
 
-export const searchQuery = createAsyncThunk('card/searchQuery', ({query, count}: IsearchQuery) => {
-  const params = {
+export const searchQuery = createAsyncThunk('card/searchQuery', ({query, count, platforms, tags, ordering, Rus}: ISearchQuery) => {
+  let params = {
     params: {
       page_size: 100,
-      search: query,
       search_precise: true,
       search_exact: true,
-      tags: 'singleplayer'
     }    
   }
-  const newUrl = url + `&${query}`;
+  let newUrl = url;
+  if(query.length > 0) newUrl = newUrl + `&search=${query}`;
+  if(tags.length > 0) newUrl = newUrl + `&tags=${tags}`;
+  if(platforms.length > 0) newUrl = newUrl + `&platforms=${platforms}`;
+  if(ordering.length > 0) newUrl = newUrl + `&ordering=-${ordering}`;
+  if(Rus.length > 0) newUrl = newUrl + `${Rus}`;
+  
   const newCount = count + 1;
   return axios.get(newUrl, params).then(res => {
       if(res.status === 200) {
           return res.data.results
       } else {
-        if(newCount < 4) getGames(newCount);
+        if(newCount < 4) searchQuery({query, count: newCount, platforms, tags, ordering, Rus});
       }
   })
 })
@@ -60,7 +76,14 @@ export const searchQuery = createAsyncThunk('card/searchQuery', ({query, count}:
 export const GamesSlice = createSlice({
   name: 'games',
   initialState,
-  reducers: {},
+  reducers: {
+    setFilters(state, action: PayloadAction<Filters>) {
+      state.filters = action.payload;
+    },
+    setQuery(state, action: PayloadAction<string>) {
+      state.query = action.payload;
+    }
+  },
   extraReducers: builder => {
     builder
       // Получить список игр
@@ -93,4 +116,5 @@ export const GamesSlice = createSlice({
   }
 })
 
+export const { setFilters, setQuery } = GamesSlice.actions
 export default GamesSlice.reducer

@@ -31,3 +31,10 @@ export type Platforms = {
 export type screenshot = {
     image: string
 }
+
+export type Filters = {
+    platforms: string
+    tags: string
+    ordering: string
+    Rus: string
+}
