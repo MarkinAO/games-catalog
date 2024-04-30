@@ -14,37 +14,38 @@ interface IPlatforms {
 export default function Platforms({ data }: IPlatforms) {
     const platforms = [
         {
-            name: 'windows',
-            flag: false,
-            img: windows
-        },
-        {
             name: 'PC',
+            name2: '',
             flag: false,
             img: windows
         },
         {
             name: 'linux',
+            name2: '',
             flag: false,
             img: linux
         },
         {
-            name: 'macos',
+            name: 'iOS',
+            name2: 'Apple Macintosh',
             flag: false,
             img: macos
         },
         {
             name: 'android',
+            name2: '',
             flag: false,
             img: android
         },
         {
             name: 'playstation',
+            name2: '',
             flag: false,
             img: playstation
         },
         {
             name: 'xbox',
+            name2: '',
             flag: false,
             img: xbox
         }
@@ -54,7 +55,11 @@ export default function Platforms({ data }: IPlatforms) {
         if(data.find(el => el.platform.name.toLowerCase().includes(plat.name.toLowerCase()))) {
             platforms[index].flag = true;
         }
+        if(data.find(el => el.platform.name.toLowerCase().includes(plat.name2?.toLowerCase()))) {
+            platforms[index].flag = true;
+        }
     })
+    console.log(data)
 
     return(
         <div className={style.container}>
