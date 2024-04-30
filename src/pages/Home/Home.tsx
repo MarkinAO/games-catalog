@@ -14,9 +14,14 @@ export default function Cards() {
   const dispatch = useDispatch<AppDispatch>();
   const games = useSelector((state: RootState) => state.games.games);
   const loading = useSelector((state: RootState) => state.games.load);
+  const error = useSelector((state: RootState) => state.games.error);
   
+  const getGamesList = () => {
+    dispatch(getGames(0))
+  }
+
   useEffect(() => {
-    if(games.length === 0) dispatch(getGames(0))
+    if(games.length === 0) getGamesList()
   }, [])
 
   useEffect(() => {
@@ -41,6 +46,15 @@ export default function Cards() {
           );
         })}
       </div>}
+        {error.length > 0 && !loading &&
+          <div className={style.errorButton}>
+            <b>{error}</b>
+            <button 
+              className={style.button}
+              onClick={() => getGamesList()}
+            >Обновить страницу</button>
+          </div>          
+        }
     </div>    
   );
 }

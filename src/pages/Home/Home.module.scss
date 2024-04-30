@@ -9,6 +9,26 @@
         display: flex;
         flex-wrap: wrap;
         gap: 20px;
-        justify-content: center;
+        justify-content: center;        
+    }
+
+    .errorButton {        
+        b {
+            display: block;
+            font-size: 22px;
+            color: #ff0000;
+        }
+        button {
+            padding: 5px 20px;
+            border: 1px solid #9c9c9c;
+            box-shadow: 1px 1px 5px 0 #9c9c9c;
+            transition: all 0.2s;
+        }
+        button:hover {
+            color: #007bff;
+            border: 1px solid #007bff;
+            box-shadow: 2px 2px 9px 0 #9c9c9c;    
+            transform: translate(0, -3px);
+        }
     }
 }
