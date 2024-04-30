@@ -10,4 +10,4 @@
 - Redux-toolkit
 - Sass
   
-##[Проект развернут по ссылке](https://games-catalog.onrender.com/)
+[Проект развернут по ссылке](https://games-catalog.onrender.com/)
