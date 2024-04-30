@@ -19,7 +19,7 @@ const initialState: GameState = {
       platforms: '',
       tags: '',
       ordering: '',
-      Rus: ''
+      genres: ''
     },
     count: 0,
     load: false,
@@ -45,10 +45,10 @@ interface ISearchQuery {
   platforms: string
   tags: string
   ordering: string
-  Rus: string
+  genres: string
 }
 
-export const searchQuery = createAsyncThunk('card/searchQuery', ({query, count, platforms, tags, ordering, Rus}: ISearchQuery) => {
+export const searchQuery = createAsyncThunk('card/searchQuery', ({query, count, platforms, tags, ordering, genres}: ISearchQuery) => {
   let params = {
     params: {
       page_size: 100,
@@ -61,14 +61,14 @@ export const searchQuery = createAsyncThunk('card/searchQuery', ({query, count, 
   if(tags.length > 0) newUrl = newUrl + `&tags=${tags}`;
   if(platforms.length > 0) newUrl = newUrl + `&platforms=${platforms}`;
   if(ordering.length > 0) newUrl = newUrl + `&ordering=-${ordering}`;
-  if(Rus.length > 0) newUrl = newUrl + `${Rus}`;
+  if(genres.length > 0) newUrl = newUrl + `&genres=${genres}`;
   
   const newCount = count + 1;
   return axios.get(newUrl, params).then(res => {
       if(res.status === 200) {
           return res.data.results
       } else {
-        if(newCount < 4) searchQuery({query, count: newCount, platforms, tags, ordering, Rus});
+        if(newCount < 4) searchQuery({query, count: newCount, platforms, tags, ordering, genres});
       }
   })
 })

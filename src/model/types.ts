@@ -36,5 +36,5 @@ export type Filters = {
     platforms: string
     tags: string
     ordering: string
-    Rus: string
+    genres: string
 }

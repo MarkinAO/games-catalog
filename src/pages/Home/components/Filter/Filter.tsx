@@ -13,7 +13,22 @@ const initialState = {
     PlayStation: false,
     Linux: false,
     MAC: false,
-    Rus: false,
+    Action: false,
+    Indie: false,
+    Adventure: false,
+    RPG: false,
+    Strategy: false,
+    Shooter: false,
+    Casual: false,
+    Simulation: false,
+    Puzzle: false,
+    Arcade: false,
+    Platformer: false,
+    Racing: false,
+    Sports: false,
+    Fighting: false,
+    Family: false,
+    Card: false,
     'Max rating': false
 }
 
@@ -58,23 +73,34 @@ export default function Filter() {
                     platforms = platforms.slice(1)
                 }
 
+                let genres = Object.keys(filters)
+                    .filter(key => ['Action', 'Indie', 'Adventure', 'RPG', 'Strategy', 'Shooter', 'Casual', 'Simulation', 'Puzzle', 'Arcade', 'Platformer', 'Racing', 'Sports', 'Fighting', 'Family', 'Card'].includes(key))
+                    .map(key => filters[key] ? key : '')
+                    .join(',').toLowerCase();
+                while(genres[0] === ',' || genres[genres.length - 1] === ',') {
+                    if(genres[0] === ',') genres = genres.slice(1)
+                    if(genres[genres.length - 1] === ',') genres = genres.slice(0, -1)
+                }
+
                 const newFilters: Filters = {
                     platforms: platforms,
                     tags: tags,
                     ordering: filters['Max rating'] ? 'rating' : '',
-                    Rus: filters.lang ? '&filter[voice_language]=russian' : ''
+                    genres: genres
                 }
                 dispatch(setNewFilters(newFilters));
                 dispatch(searchQuery({...newFilters, query: query, count: 0}));
             }}
         >
-            {Object.keys(filters).filter(key => key in initialState).map((key) => (
-                <label key={key} onClick={(e: any) => onCheckboxChange(e)}>
-                    {key}
-                    <input type="checkbox" name={key} className={style.hidden} />
-                </label>
-            ))}
-            <button>Применить</button>
+            <div className={style.tags}>
+                {Object.keys(filters).filter(key => key in initialState).map((key) => (
+                    <label key={key} onClick={(e: any) => onCheckboxChange(e)}>
+                        {key}
+                        <input type="checkbox" name={key} className={style.hidden} />
+                    </label>
+                ))}
+            </div>            
+            <button>Искать</button>
         </form>
     )
 }
