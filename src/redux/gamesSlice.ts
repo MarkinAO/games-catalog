@@ -11,6 +11,7 @@ export interface GameState {
   load: boolean
   error: string
   query: string
+  warning: string
 }
 
 const initialState: GameState = {
@@ -24,7 +25,8 @@ const initialState: GameState = {
     count: 0,
     load: false,
     error: '',
-    query: ''
+    query: '',
+    warning: ''
 }
 
 const url = `${import.meta.env.VITE_API_URL}${import.meta.env.VITE_API_KEY}`;
@@ -59,7 +61,7 @@ export const searchQuery = createAsyncThunk('card/searchQuery', ({query, count, 
   let newUrl = url;
   if(query.length > 0) newUrl = newUrl + `&search=${query}`;
   if(tags.length > 0) newUrl = newUrl + `&tags=${tags}`;
-  if(platforms.length > 0) newUrl = newUrl + `&platforms=${platforms}`;
+  if(platforms.length > 0) newUrl = newUrl + `&parent_platforms=${platforms}`;
   if(ordering.length > 0) newUrl = newUrl + `&ordering=-${ordering}`;
   if(genres.length > 0) newUrl = newUrl + `&genres=${genres}`;
   
@@ -103,11 +105,13 @@ export const GamesSlice = createSlice({
       // Поиск
       .addCase(searchQuery.pending, state => {
         state.load = true
+        state.warning = ''
       })
       .addCase(searchQuery.fulfilled, (state, action) => {
         state.load = false
         state.games = action.payload
         state.error = ''
+        if(action.payload.length === 0) state.warning = 'По вашему запросу ничего не найдено'
       })
       .addCase(searchQuery.rejected, (state) => {
         state.load = false

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import style from './Search.module.scss';
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../../../redux/store";
@@ -6,29 +6,33 @@ import { searchQuery, setQuery as setQueryInStore } from '../../../../redux/game
 
 
 export default function Search() {
-    const [query, setQuery] = useState('');
+    const [currentQuery, setCurrentQuery] = useState('');
     const dispatch = useDispatch<AppDispatch>();
-    const filters = useSelector((state: RootState) => state.games.filters);
+    const {filters, warning, query} = useSelector((state: RootState) => state.games);
+
+    useEffect(() => {
+        query.length > 0 && setCurrentQuery(query)
+    }, [])
 
     return(
         <form 
             onSubmit={(e) => {
                 e.preventDefault()
-                dispatch(searchQuery({...filters, query: query, count: 0}))
-                console.log('Search:' ,{...filters, query: query, count: 0})
+                dispatch(searchQuery({...filters, query: currentQuery, count: 0}))
             }}
             className={style.form}
             >
             <input 
                 type="text" 
-                value={query} 
+                value={currentQuery} 
                 onChange={(e) => {
-                    setQuery(e.target.value);
+                    setCurrentQuery(e.target.value);
                     dispatch(setQueryInStore(e.target.value));
                 }}
                 className={style.search}
                 placeholder='Поиск'
             />
+            <div className={style.warning}>{warning}</div>
         </form>
     )
 }

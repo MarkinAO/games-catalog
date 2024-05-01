@@ -58,7 +58,7 @@ export default function Filter() {
                     .map(key => filters[key] ? key.toLowerCase() : '')
                     .join(',').replace(/^,|,$/g, '').replace(/\,\s*,/g, ',');
 
-                let platforms = Object.keys(filters)
+                const platforms = Object.keys(filters)
                     .filter(key => ['PC', 'Xbox', 'PlayStation', 'Linux', 'MAC'].includes(key))
                     .map(key => (filters[key]) ? key : '')
                     .filter(el => el !== '')
@@ -69,7 +69,7 @@ export default function Filter() {
                     .replace('PlayStation', '2')
                     .replace('Xbox', '3')
 
-                let genres = Object.keys(filters)
+                const genres = Object.keys(filters)
                     .filter(key => ['Action', 'Indie', 'Adventure', 'RPG', 'Strategy', 'Shooter', 'Casual', 'Simulation', 'Puzzle', 'Arcade', 'Platformer', 'Racing', 'Sports', 'Fighting', 'Family', 'Card'].includes(key))
                     .map(key => filters[key] ? key : '')
                     .filter(el => el !== '')
@@ -83,7 +83,6 @@ export default function Filter() {
                 }
                 dispatch(setNewFilters(newFilters));
                 dispatch(searchQuery({...newFilters, query: query, count: 0}));
-                console.log('Filters:' ,{...newFilters, query: query, count: 0})
             }}
         >
             <div className={style.tags}>
