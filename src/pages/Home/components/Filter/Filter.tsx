@@ -60,27 +60,20 @@ export default function Filter() {
 
                 let platforms = Object.keys(filters)
                     .filter(key => ['PC', 'Xbox', 'PlayStation', 'Linux', 'MAC'].includes(key))
-                    .map(key => filters[key] ? key : '')
+                    .map(key => (filters[key]) ? key : '')
+                    .filter(el => el !== '')
                     .join(',')
-                    .replace(/^,|,$/g, '')
-                    .replace(/,\s*,/g, ',')
                     .replace('PC', '1')
                     .replace('MAC', '5')
                     .replace('Linux', '6')
                     .replace('PlayStation', '2')
                     .replace('Xbox', '3')
-                while(platforms[0] === ',') {
-                    platforms = platforms.slice(1)
-                }
 
                 let genres = Object.keys(filters)
                     .filter(key => ['Action', 'Indie', 'Adventure', 'RPG', 'Strategy', 'Shooter', 'Casual', 'Simulation', 'Puzzle', 'Arcade', 'Platformer', 'Racing', 'Sports', 'Fighting', 'Family', 'Card'].includes(key))
                     .map(key => filters[key] ? key : '')
-                    .join(',').toLowerCase();
-                while(genres[0] === ',' || genres[genres.length - 1] === ',') {
-                    if(genres[0] === ',') genres = genres.slice(1)
-                    if(genres[genres.length - 1] === ',') genres = genres.slice(0, -1)
-                }
+                    .filter(el => el !== '')
+                    .join(',').toLowerCase();                
 
                 const newFilters: Filters = {
                     platforms: platforms,
@@ -90,6 +83,7 @@ export default function Filter() {
                 }
                 dispatch(setNewFilters(newFilters));
                 dispatch(searchQuery({...newFilters, query: query, count: 0}));
+                console.log('Filters:' ,{...newFilters, query: query, count: 0})
             }}
         >
             <div className={style.tags}>

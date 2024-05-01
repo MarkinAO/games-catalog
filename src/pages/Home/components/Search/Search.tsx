@@ -15,6 +15,7 @@ export default function Search() {
             onSubmit={(e) => {
                 e.preventDefault()
                 dispatch(searchQuery({...filters, query: query, count: 0}))
+                console.log('Search:' ,{...filters, query: query, count: 0})
             }}
             className={style.form}
             >
@@ -23,7 +24,7 @@ export default function Search() {
                 value={query} 
                 onChange={(e) => {
                     setQuery(e.target.value);
-                    dispatch(setQueryInStore(query));
+                    dispatch(setQueryInStore(e.target.value));
                 }}
                 className={style.search}
                 placeholder='Поиск'

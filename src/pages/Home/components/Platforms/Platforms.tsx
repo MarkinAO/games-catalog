@@ -55,7 +55,7 @@ export default function Platforms({ data }: IPlatforms) {
         if(data.find(el => el.platform.name.toLowerCase().includes(plat.name.toLowerCase()))) {
             platforms[index].flag = true;
         }
-        if(data.find(el => el.platform.name.toLowerCase().includes(plat.name2?.toLowerCase()))) {
+        if(plat.name2.length > 0 && data.find(el => el.platform.name.toLowerCase().includes(plat.name2?.toLowerCase()))) {
             platforms[index].flag = true;
         }
     })
