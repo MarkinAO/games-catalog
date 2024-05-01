@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import type { GameData, Filters } from '../model/types';
+import type { GameData, Filters, MaskFilters } from '../model/types';
+import { initialStateFilters } from '../model/types';
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 export interface GameState {
@@ -12,6 +13,7 @@ export interface GameState {
   error: string
   query: string
   warning: string
+  maskFilters: MaskFilters
 }
 
 const initialState: GameState = {
@@ -26,7 +28,8 @@ const initialState: GameState = {
     load: false,
     error: '',
     query: '',
-    warning: ''
+    warning: '',
+    maskFilters: initialStateFilters
 }
 
 const url = `${import.meta.env.VITE_API_URL}${import.meta.env.VITE_API_KEY}`;
@@ -84,6 +87,9 @@ export const GamesSlice = createSlice({
     },
     setQuery(state, action: PayloadAction<string>) {
       state.query = action.payload;
+    },
+    setMaskFilters(state, action: PayloadAction<MaskFilters>) {
+      state.maskFilters = action.payload;
     }
   },
   extraReducers: builder => {
@@ -120,5 +126,5 @@ export const GamesSlice = createSlice({
   }
 })
 
-export const { setFilters, setQuery } = GamesSlice.actions
+export const { setFilters, setQuery, setMaskFilters } = GamesSlice.actions
 export default GamesSlice.reducer

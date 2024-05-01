@@ -1,41 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import style from './Filter.module.scss';
-import { setFilters as setNewFilters, searchQuery } from '../../../../redux/gamesSlice';
+import { setFilters as setNewFilters, searchQuery, setMaskFilters } from '../../../../redux/gamesSlice';
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from '../../../../redux/store';
 import type { Filters } from '../../../../model/types';
-
-const initialState = {
-    Multiplayer: false,
-    Singleplayer: false,
-    PC: false,
-    Xbox: false,
-    PlayStation: false,
-    Linux: false,
-    MAC: false,
-    Action: false,
-    Indie: false,
-    Adventure: false,
-    RPG: false,
-    Strategy: false,
-    Shooter: false,
-    Casual: false,
-    Simulation: false,
-    Puzzle: false,
-    Arcade: false,
-    Platformer: false,
-    Racing: false,
-    Sports: false,
-    Fighting: false,
-    Family: false,
-    Card: false,
-    'Max rating': false
-}
+import  { initialStateFilters } from '../../../../model/types';
 
 export default function Filter() {
-    const [filters, setFilters] = useState<any>(initialState);
+    const [filters, setFilters] = useState<any>(initialStateFilters);
     const dispatch = useDispatch<AppDispatch>();
-    const query = useSelector((state: RootState) => state.games.query);
+    const { query, maskFilters } = useSelector((state: RootState) => state.games);
+
+    useEffect(() => {
+        setFilters(maskFilters)
+    }, [])
 
     const onCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newFilters = {...filters, [`${e.target.name}`]: e.target.checked};
@@ -56,7 +34,8 @@ export default function Filter() {
                 const tags = Object.keys(filters)
                     .filter(key => ['Multiplayer', 'Singleplayer'].includes(key))
                     .map(key => filters[key] ? key.toLowerCase() : '')
-                    .join(',').replace(/^,|,$/g, '').replace(/\,\s*,/g, ',');
+                    .filter(el => el !== '')
+                    .join(',');
 
                 const platforms = Object.keys(filters)
                     .filter(key => ['PC', 'Xbox', 'PlayStation', 'Linux', 'MAC'].includes(key))
@@ -81,17 +60,31 @@ export default function Filter() {
                     ordering: filters['Max rating'] ? 'rating' : '',
                     genres: genres
                 }
+                dispatch(setMaskFilters(filters));
                 dispatch(setNewFilters(newFilters));
                 dispatch(searchQuery({...newFilters, query: query, count: 0}));
             }}
         >
             <div className={style.tags}>
-                {Object.keys(filters).filter(key => key in initialState).map((key) => (
-                    <label key={key} onClick={(e: any) => onCheckboxChange(e)}>
-                        {key}
-                        <input type="checkbox" name={key} className={style.hidden} />
-                    </label>
-                ))}
+                {Object.keys(filters)
+                    .filter(key => key in initialStateFilters)
+                    .map((key) => {
+                        const isChecked = maskFilters[key]                      
+                        return(
+                            <label 
+                            key={key} 
+                            onClick={(e: any) => onCheckboxChange(e)}
+                            style={isChecked ? {border: '2px solid #007bff', color: '#007bff'} : {}}
+                        >
+                            {key}
+                            <input 
+                                type="checkbox" name={key} 
+                                className={style.hidden}
+                                defaultChecked={isChecked} 
+                            />
+                        </label>
+                        )
+                    })}
             </div>            
             <button>Искать</button>
         </form>

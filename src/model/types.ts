@@ -36,3 +36,34 @@ export type Filters = {
   ordering: string;
   genres: string;
 };
+
+export type MaskFilters = {
+  [key: string]: boolean;
+}
+
+export const initialStateFilters = {
+    Multiplayer: false,
+    Singleplayer: false,
+    PC: false,
+    Xbox: false,
+    PlayStation: false,
+    Linux: false,
+    MAC: false,
+    Action: false,
+    Indie: false,
+    Adventure: false,
+    RPG: false,
+    Strategy: false,
+    Shooter: false,
+    Casual: false,
+    Simulation: false,
+    Puzzle: false,
+    Arcade: false,
+    Platformer: false,
+    Racing: false,
+    Sports: false,
+    Fighting: false,
+    Family: false,
+    Card: false,
+    'Max rating': false
+}
