@@ -43,4 +43,11 @@
             max-width: 500px;
         }
     }
+
+    @media (width < 560px) {
+        .description {
+            width: 350px;
+        }
+    }
+    
 }
