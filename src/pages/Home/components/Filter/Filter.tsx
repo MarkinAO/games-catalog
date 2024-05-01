@@ -86,7 +86,7 @@ export default function Filter() {
                         )
                     })}
             </div>            
-            <button>Искать</button>
+            <button className='button'>Искать</button>
         </form>
     )
 }

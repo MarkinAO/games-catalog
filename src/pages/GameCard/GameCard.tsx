@@ -40,8 +40,8 @@ export default function GameCard() {
                     </div>
                 </>                
             }
-            <div className={style.buttonWrap}>
-                <Link to={'/'} className={style.backButton}>Назад</Link>
+            <div className={style.buttonWrap }>
+                <Link to={'/'} className='button'>Назад</Link>
             </div>            
         </div>
     )

@@ -50,7 +50,7 @@ export default function Cards() {
           <div className={style.errorButton}>
             <b>{error}</b>
             <button 
-              className={style.button}
+              className='button'
               onClick={() => getGamesList()}
             >Обновить страницу</button>
           </div>          
