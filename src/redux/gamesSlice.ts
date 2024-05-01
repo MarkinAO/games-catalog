@@ -115,7 +115,7 @@ export const GamesSlice = createSlice({
       })
       .addCase(searchQuery.fulfilled, (state, action) => {
         state.load = false
-        state.games = action.payload
+        state.games = action.payload.length > 0 ? action.payload : state.games
         state.error = ''
         if(action.payload.length === 0) state.warning = 'По вашему запросу ничего не найдено'
       })
